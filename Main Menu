@@ -1,0 +1,17 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement; #Библиотека управления классами
+
+public class MainMenu : MonoBehaviour
+{
+    public void OpenLevel(int levelId)
+    {
+        string levelName = "Level " + levelId; #Загрузка уровня по его порядку
+        SceneManager.LoadScene(levelName);
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+}
