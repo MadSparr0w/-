@@ -1,0 +1,30 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class PauseMenu : MonoBehaviour
+{
+    [SerializeField] GameObject pauseMenu; #Масив для меню паузы
+
+    public void Pause()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0; #остановка времени при нажатии кнопки
+    }
+    public void Home()
+    {
+        SceneManager.LoadScene("Menu"); #Возращение в меню и возвращение времени
+        Time.timeScale = 1;
+    }
+    public void Resume()
+    {
+        pauseMenu.SetActive(false); #Возврат в игру 
+        Time.timeScale = 1;
+    }
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); #Рестарт уровня
+        Time.timeScale = 1;
+    }
+}
