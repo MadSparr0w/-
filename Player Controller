@@ -1,0 +1,59 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class Player : MonoBehaviour
+{
+    [SerializeField] KeyCode keyOne; #добавление массивов 2-х кнопок для движения куба/игрока
+    [SerializeField] KeyCode keyTwo;
+    [SerializeField] Vector3 moveDirection; #Добавление массива движения в направлении
+
+    private void FixedUpdate()
+    {
+        if (Input.GetKey(keyOne)) #Если нажата первая клавиша
+        {
+            GetComponent<Rigidbody>().velocity += moveDirection; #То движение + направление
+        }
+        if (Input.GetKey(keyTwo))
+        {
+            GetComponent<Rigidbody>().velocity -= moveDirection; #Тоже самое, только для второй клавиши
+        }
+        if (Input.GetKey(KeyCode.R)) #Если нажата R, то сцена перезакружается
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        if (Input.GetKey(KeyCode.E)) #Если нажата E, то переход на следующую сцену
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        if (Input.GetKey(KeyCode.Q)) #На предыдущую
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(this.CompareTag("Player") && other.CompareTag("Finish")) #Если игрок коснулся финиша, то сцена + 1
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        if(this.CompareTag("Cube") && other.CompareTag("Cube")) #Если куб и другой куб соприкосаются
+        {
+            foreach(Activator button in FindObjectsOfType<Activator>()) #начнется цикл и кнопку нельзя будет нажать
+            {
+                button.canPush = false;
+            }
+        }
+    }
+    private void OnTriggerExit(Collider other) #Когда кубы разъединяются, то кнопку можно будет нажать
+    {
+        if (this.CompareTag("Cube") && other.CompareTag("Cube"))
+        {
+            foreach (Activator button in FindObjectsOfType<Activator>())
+            {
+                button.canPush = true;
+            }
+        }
+    }
+}
