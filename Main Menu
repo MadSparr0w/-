@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement; #Библиотека управления классами
+using UnityEngine.SceneManagement; #Библиотека управления сценами
 
 public class MainMenu : MonoBehaviour
 {
